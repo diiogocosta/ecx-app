@@ -5,9 +5,8 @@ import CustomButton from '../components/custom-button';
 const Main = ({navigation}) => {
   const image = require('../../assets/images/welcome.png');
 
-  const onPressLearnMore = () => {
-    console.log(navigation);
-    navigation.navigate('Login');
+  const changePage = page => {
+    navigation.navigate(page);
   };
   return (
     <>
@@ -16,18 +15,18 @@ const Main = ({navigation}) => {
         <Text style={styles.brandText}>{'eCX'}</Text>
         <View style={{width: '100%'}}>
           <CustomButton
-            onPress={onPressLearnMore}
+            onPress={() => changePage('Login')}
             title="Conecte com Facebook"
             style={styles.facebookBtn}
             icon={['fab', 'facebook-f']}
           />
           <CustomButton
-            onPress={onPressLearnMore}
+            onPress={() => changePage('Login')}
             title="Login"
             style={styles.loginBtn}
           />
           <CustomButton
-            onPress={onPressLearnMore}
+            onPress={() => changePage('Login')}
             title="Entrar como visitante"
           />
           <View style={styles.signUpContainer}>
@@ -37,7 +36,7 @@ const Main = ({navigation}) => {
             <CustomButton
               style={{paddingHorizontal: 0}}
               textStyle={styles.signUpText}
-              onPress={onPressLearnMore}
+              onPress={() => changePage('SignUp')}
               title="Cadastre"
             />
           </View>
