@@ -15,7 +15,7 @@ const Main = ({navigation}) => {
         <Text style={styles.brandText}>{'eCX'}</Text>
         <View style={{width: '100%'}}>
           <CustomButton
-            onPress={() => changePage('Login')}
+            onPress={() => changePage('Onboarding')}
             title="Conecte com Facebook"
             style={styles.facebookBtn}
             icon={['fab', 'facebook-f']}
