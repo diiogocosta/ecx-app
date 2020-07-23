@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react';
-import { StyleSheet, ImageBackground, View, Text } from 'react-native';
+import React, {useEffect} from 'react';
+import {StyleSheet, ImageBackground, View, Text} from 'react-native';
 import CustomButton from '../components/custom-button';
-import { api } from '../services/api';
+import {api} from '../services/api';
 
-const Main = ({ navigation }) => {
+const Main = ({navigation}) => {
   const image = require('../../assets/images/welcome.png');
 
   const changePage = (page) => {
@@ -14,7 +14,7 @@ const Main = ({ navigation }) => {
       <ImageBackground source={image} style={styles.image} />
       <View style={styles.container}>
         <Text style={styles.brandText}>{'eCX'}</Text>
-        <View style={{ width: '100%' }}>
+        <View style={{width: '100%'}}>
           <CustomButton
             onPress={() => changePage('Onboarding')}
             title="Conecte com Facebook"
@@ -31,11 +31,11 @@ const Main = ({ navigation }) => {
             title="Entrar como visitante"
           />
           <View style={styles.signUpContainer}>
-            <Text style={{ fontSize: 18, color: '#fff', opacity: 0.8 }}>
+            <Text style={{fontSize: 18, color: '#fff', opacity: 0.8}}>
               {'Não tem uma conta?'}
             </Text>
             <CustomButton
-              style={{ paddingHorizontal: 0 }}
+              style={{paddingHorizontal: 0}}
               textStyle={styles.signUpText}
               onPress={() => changePage('SignUp')}
               title="Cadastre"
