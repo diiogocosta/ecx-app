@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import { ActivityIndicator, View, StyleSheet, Linking } from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {ActivityIndicator, View, StyleSheet, Linking} from 'react-native';
 
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import {NavigationContainer} from '@react-navigation/native';
+import {createStackNavigator} from '@react-navigation/stack';
 
 import Main from './pages/main';
 import Login from './pages/login/login';
 import SignUp from './pages/signup/signup';
 import Onboarding from './pages/onboarding/onboarding';
 import CreateAthlete from './pages/athlete/create-athlete';
-import { appAuth } from './services/api';
+import {appAuth} from './services/api';
 
 const Auth = createStackNavigator();
 
@@ -18,14 +18,16 @@ const useAppInitialize = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    const extractIdFromUrl = (url: string | any) => {
+      return url ? url.match(/athletes\/([a-f\d-]+)\//)[1] : null;
+    };
     const requestAppToken = async () => {
       await appAuth('ecx-app', '123');
       const initialUrl = (await Linking.getInitialURL()) as string;
-      setUserId(initialUrl);
+      setUserId(extractIdFromUrl(initialUrl));
       Linking.addEventListener('url', (event) => {
         setLoading(true);
-        const id = event.url.match(/athletes\/([a-f\d-]+)\//) as string[];
-        setUserId(id[1]);
+        setUserId(extractIdFromUrl(event.url));
         Linking.removeAllListeners('url');
         setLoading(false);
       });
@@ -34,11 +36,11 @@ const useAppInitialize = () => {
     requestAppToken();
   }, []);
 
-  return { userId, loading };
+  return {userId, loading};
 };
 
 const Routes = () => {
-  const { loading, userId } = useAppInitialize();
+  const {loading, userId} = useAppInitialize();
   const getDeepLinkRoute = () =>
     userId
       ? {
@@ -69,13 +71,12 @@ const Routes = () => {
       <Auth.Navigator
         screenOptions={{
           headerShown: false,
-          cardStyle: { backgroundColor: '#323337' },
-        }}
-      >
+          cardStyle: {backgroundColor: '#323337'},
+        }}>
         <Auth.Screen
           name={deepLinkRoute.primaryRoute}
           component={deepLinkRoute.primaryComponent}
-          initialParams={{ userId }}
+          initialParams={{userId}}
         />
         <Auth.Screen
           name={deepLinkRoute.secondaryRoute}
