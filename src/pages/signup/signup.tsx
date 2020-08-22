@@ -1,17 +1,17 @@
-import React, { useState } from 'react';
-import { Image, ScrollView, StyleSheet, View, Text } from 'react-native';
+import React, {useState} from 'react';
+import {Image, ScrollView, StyleSheet, View, Text} from 'react-native';
 import InputForm from '../../components/input-form';
 import CustomButton from '../../components/custom-button';
 import CheckBox from '@react-native-community/checkbox';
-import { useNavigation } from '@react-navigation/native';
-import signupService from './signup-service';
-import { User } from 'src/models/user';
+import {useNavigation} from '@react-navigation/native';
+import {IUser} from '../../models/user';
+import {createUser} from '../../services/user';
 
 const SignUp = () => {
   const navigation = useNavigation();
   const image = require('../../../assets/images/logo-icone.png');
 
-  const [form, setForm] = useState<User>({
+  const [form, setForm] = useState<IUser>({
     firstName: '',
     lastName: '',
     email: '',
@@ -19,18 +19,11 @@ const SignUp = () => {
   });
 
   const signUp = () => {
-    signupService
-      .signup(form)
+    createUser(form)
       .then((createdUser) => {
-        navigation.navigate('Onboarding', { userId: createdUser.id });
+        navigation.navigate('Onboarding', {userId: createdUser.id});
       })
-      .catch(() => {
-        signupService.tempGetUser(form.email).then((rawuser) => {
-          navigation.navigate('Onboarding', {
-            userId: rawuser.content[0].id,
-          });
-        });
-      });
+      .catch(() => {});
   };
 
   return (
@@ -39,26 +32,25 @@ const SignUp = () => {
       contentContainerStyle={{
         flexGrow: 1,
         justifyContent: 'space-between',
-      }}
-    >
+      }}>
       <View>
         <Image source={image} style={styles.logoImg} />
         <InputForm
           label="Primeiro nome"
-          onChangeText={(value) => setForm({ ...form, firstName: value })}
+          onChangeText={(value) => setForm({...form, firstName: value})}
         />
         <InputForm
           label="Ultimo nome"
-          onChangeText={(value) => setForm({ ...form, lastName: value })}
+          onChangeText={(value) => setForm({...form, lastName: value})}
         />
         <InputForm
           label="E-mail"
-          onChangeText={(value) => setForm({ ...form, email: value })}
+          onChangeText={(value) => setForm({...form, email: value})}
         />
         <InputForm
           label="Senha"
           secure={true}
-          onChangeText={(value) => setForm({ ...form, password: value })}
+          onChangeText={(value) => setForm({...form, password: value})}
         />
         {/* <InputForm
           label="Confirmar senha"
@@ -83,8 +75,7 @@ const SignUp = () => {
             style={{
               color: '#757B81',
               marginLeft: 8,
-            }}
-          >
+            }}>
             {'Aceitar os termos e condições'}
           </Text>
         </View>

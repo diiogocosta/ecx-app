@@ -1,22 +1,22 @@
 import axios from 'axios';
-import { AppToken } from '../models/token';
-import { AsyncStorage } from 'react-native';
+import {AppToken} from '../models/token';
+import {AsyncStorage} from 'react-native';
 
 export const api = axios.create({
   baseURL: 'http://localhost:8080',
 });
 
-export const appAuth = async (client_id: string, client_secret: string) => {
+export const setAuthorizationHeader = (token: string) => {
+  api.defaults.headers = {
+    Authorization: `Bearer ${token}`,
+  };
+};
+
+export const appAuth = async () => {
   const data = new FormData();
   data.append('grant_type', 'client_credentials');
 
-  const setAuthorizationHeader = (token: string) => {
-    api.defaults.headers = {
-      Authorization: `Bearer ${token}`,
-    };
-  };
-
-  const appToken = await AsyncStorage.getItem('ECXApp:Auth');
+  const appToken = await AsyncStorage.getItem('ECXApp:Auth-app');
 
   if (appToken) {
     setAuthorizationHeader(appToken);
@@ -26,12 +26,12 @@ export const appAuth = async (client_id: string, client_secret: string) => {
   return api
     .post<AppToken>('oauth/token', data, {
       auth: {
-        username: client_id,
-        password: client_secret,
+        username: 'ecx-app',
+        password: '123',
       },
     })
     .then((response) => {
-      AsyncStorage.setItem('ECXApp:Auth', response.data.access_token);
+      AsyncStorage.setItem('ECXApp:Auth-app', response.data.access_token);
       setAuthorizationHeader(response.data.access_token);
       return response.data.access_token;
     });

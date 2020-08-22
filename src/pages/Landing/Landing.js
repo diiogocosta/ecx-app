@@ -1,13 +1,13 @@
 import React, {useEffect} from 'react';
 import {StyleSheet, ImageBackground, View, Text} from 'react-native';
-import CustomButton from '../components/custom-button';
-import {api} from '../services/api';
+import CustomButton from '../../components/custom-button';
+import {api, logout} from '../../services/api';
 
-const Main = ({navigation}) => {
-  const image = require('../../assets/images/welcome.png');
+const Landing = ({navigation}) => {
+  const image = require('../../../assets/images/welcome.png');
 
   const changePage = (page) => {
-    navigation.navigate(page);
+    navigation.navigate(page, {userId: ''});
   };
   return (
     <>
@@ -27,7 +27,7 @@ const Main = ({navigation}) => {
             style={styles.loginBtn}
           />
           <CustomButton
-            onPress={() => changePage('Login')}
+            onPress={() => logout()}
             title="Entrar como visitante"
           />
           <View style={styles.signUpContainer}>
@@ -93,4 +93,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Main;
+export default Landing;

@@ -1,4 +1,4 @@
-export interface User {
+export interface IUser {
   email: string;
   firstName: string;
   lastName: string;
@@ -6,16 +6,17 @@ export interface User {
   type?: string;
 }
 
-export interface CreateUserResponse {
+export interface ICreateUserResponse {
   id: string;
   email: string;
 }
 
-export interface ActivateUser {
+export interface IActivateUser {
   about: string;
   birthDate: string;
   box: {
     id: string;
   };
   weight: number;
+  genre: string;
 }

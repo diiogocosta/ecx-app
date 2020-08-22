@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
-import { Text, StyleSheet, View, Image } from 'react-native';
+import React, {useState} from 'react';
+import {Text, StyleSheet, View, Image} from 'react-native';
 import Swiper from 'react-native-swiper';
 import slides from './slides';
 import CustomButton from '../../components/custom-button';
-import { useNavigation, useRoute } from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
 
 const Onboarding = () => {
   const navigation = useNavigation();
-  const { userId }: any = useRoute().params;
+  const {userId}: any = useRoute().params;
   console.log(userId);
 
   const image = require('../../../assets/images/logo-icone.png');
@@ -32,20 +32,19 @@ const Onboarding = () => {
   return (
     <>
       <Swiper
-        style={{ zIndex: 0 }}
+        style={{zIndex: 0}}
         loop={false}
         showsPagination={!lastPage}
         activeDotColor={'#FF3367'}
         dotColor={'#8E8E8E'}
         onIndexChanged={(index) => {
           setLastPage(index === 3);
-        }}
-      >
+        }}>
         {slides.map((slide, index) => {
           return (
             <View key={index} style={styles.slideItem}>
               <Image source={image} style={styles.logoImg} />
-              <Image source={slide.imgSrc} />
+              <Image source={slide.imgSrc} style={styles.slideImg} />
 
               <View style={styles.textView}>
                 <Text style={styles.titleText}>{slide.title}</Text>
@@ -71,6 +70,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#323337',
     paddingHorizontal: 45,
     paddingTop: 45,
+  },
+  slideImg: {
+    transform: [{scale: 0.75}],
   },
   textView: {
     alignItems: 'center',
